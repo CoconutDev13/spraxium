@@ -3,7 +3,13 @@ import type { TemplateDefinition } from '../interfaces';
 export const NewCommandConstant = {
   ALL_PACKAGE_MANAGERS: ['pnpm', 'bun', 'yarn', 'npm'] as const,
 
-  CORE_PACKAGES: ['@spraxium/common', '@spraxium/core', '@spraxium/env', 'discord.js'] as const,
+  CORE_PACKAGES: [
+    '@spraxium/common',
+    '@spraxium/core',
+    '@spraxium/env',
+    '@spraxium/logger',
+    'discord.js',
+  ] as const,
 
   CLI_DEV_PACKAGES: ['@spraxium/cli', 'typescript', '@types/node', 'tsdown'] as const,
 
@@ -14,6 +20,7 @@ export const NewCommandConstant = {
     { pkg: '@spraxium/i18n', label: 'i18n', module: 'I18nModule' },
     { pkg: '@spraxium/signal', label: 'signal', module: null },
     { pkg: '@spraxium/signal-client', label: 'signal-client', module: null },
+    { pkg: '@spraxium/webhook', label: 'webhook', module: 'WebhookModule' },
   ] as const,
 
   TEMPLATES: [
