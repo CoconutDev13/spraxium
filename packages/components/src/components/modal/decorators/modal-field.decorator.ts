@@ -307,7 +307,7 @@ export function ModalCheckbox(config: ModalCheckboxFieldConfig): PropertyDecorat
 }
 
 /**
- * File upload input. Users can attach 1–10 files.
+ * File upload input. Users can attach 1-10 files.
  *
  * @example
  * @ModalFileUpload({ label: 'Attachments', maxFiles: 3 })

@@ -9,12 +9,6 @@ import { type ButtonInteraction, MessageFlags } from 'discord.js';
 import { CloseTicketButton } from '../components/close-ticket-button.component';
 import { TicketsRepository } from '../tickets.repository';
 
-/**
- * Inline-encoded handler. The ticket id arrives via `@ButtonParams<{ id }>()`
- * — no payload lookup required, so the button keeps working even after the
- * payload TTL would have expired. On close we revoke every assign-ref the
- * ticket minted via `ButtonPayloadService.revokeMany()`.
- */
 @DynamicButtonHandler(CloseTicketButton)
 export class CloseTicketButtonHandler {
   constructor(

@@ -7,17 +7,6 @@ import { ListTicketsHandler } from './handlers/list-tickets.handler';
 import { OpenTicketHandler } from './handlers/open-ticket.handler';
 import { TicketsRepository } from './tickets.repository';
 
-/**
- * Demo module showcasing the full new dynamic-button system end-to-end:
- *
- *   /ticket-open subject:<text>   – creates a ticket persisted in tickets.json,
- *                                   renders an inline-encoded close button and a
- *                                   store-encoded assign button (ref tracked in DB).
- *   /ticket-list                  – lists open tickets.
- *
- *   Assign click  -> store payload + @PayloadRef (ref kept for revocation).
- *   Close click   -> @ButtonParams<{ id }>() (inline) + ButtonPayloadService.revokeMany().
- */
 @Module({
   providers: [TicketsRepository],
   commands: [OpenTicketCommand, ListTicketsCommand],

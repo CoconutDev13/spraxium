@@ -5,12 +5,6 @@ import { AssignTicketButton } from '../components/assign-ticket-button.component
 import type { Ticket } from '../tickets.data';
 import { TicketsRepository } from '../tickets.repository';
 
-/**
- * Store-encoded handler. Receives the persisted ticket snapshot via
- * `@ButtonPayload()` and the ref handle via `@PayloadRef()`. The handler does
- * NOT consume the ref — the ticket might be assigned more than once before
- * being closed; revocation happens on close.
- */
 @DynamicButtonHandler(AssignTicketButton)
 export class AssignTicketButtonHandler {
   constructor(private readonly tickets: TicketsRepository) {}

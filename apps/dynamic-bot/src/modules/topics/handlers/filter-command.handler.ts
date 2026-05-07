@@ -10,8 +10,6 @@ export class FilterCommandHandler {
   constructor(private readonly selects: SelectService) {}
 
   async handle(@Ctx() interaction: ChatInputCommandInteraction): Promise<void> {
-    // The audience flag is baked into the custom ID at render time.
-    // The handler reads it back via @SelectParams() — no store lookup needed.
     const row = await this.selects.build(FilterSelect, {
       topics: TOPICS,
       audience: 'pro',

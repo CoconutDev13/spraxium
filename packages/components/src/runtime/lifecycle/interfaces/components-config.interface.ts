@@ -64,7 +64,7 @@ export interface ComponentsConfig {
   /** Flow-context storage configuration. */
   context?: {
     /**
-     * Storage backend to use for flow contexts. Required — in-memory storage
+     * Storage backend to use for flow contexts. Required: in-memory storage
      * is not supported because it silently drops all state on every restart.
      *
      * - `{ type: 'file'; dir?: string }`: JSON snapshot on disk. Zero infrastructure. Good default for single-instance bots.

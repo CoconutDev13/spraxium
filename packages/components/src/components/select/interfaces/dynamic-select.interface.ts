@@ -8,7 +8,7 @@ export type DynamicSelectEncoding = 'store' | 'inline';
  * Configuration for `@DynamicStringSelect({ baseId })`.
  * The base ID is the prefix used to match incoming select interactions;
  * each rendered instance appends `~p:<id>` (store, default) or inline params
- * (inline) — and optionally `~ctx:<id>`.
+ * (inline) and optionally `~ctx:<id>`.
  */
 export interface DynamicStringSelectConfig {
   baseId: string;

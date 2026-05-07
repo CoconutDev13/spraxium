@@ -21,7 +21,7 @@ import { COMPONENT_METADATA_KEYS } from '../component-metadata-keys.constant';
  *     @ButtonPayload() item: Item,
  *     @PayloadRef() ref: PayloadHandle,
  *   ) {
- *     await ref.consume(); // one-shot — next click gets "expired"
+ *     await ref.consume(); // one-shot - next click gets "expired"
  *     await ctx.reply(`Purchased ${item.name}!`);
  *   }
  * }

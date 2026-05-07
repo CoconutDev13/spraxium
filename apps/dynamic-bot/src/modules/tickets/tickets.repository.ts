@@ -6,11 +6,6 @@ import type { Ticket, TicketId, TicketsFile } from './tickets.data';
 
 const DEFAULT_DB_PATH = resolve(process.cwd(), '.spraxium', 'tickets.json');
 
-/**
- * Tiny JSON-backed repository for tickets. Reads are cached in memory; every
- * mutation rewrites the JSON file atomically (write + replace). Sufficient for
- * a single-process demo bot.
- */
 @Injectable()
 export class TicketsRepository {
   private readonly log = logger.child('TicketsRepository');
@@ -96,7 +91,6 @@ export class TicketsRepository {
   }
 
   private persist(file: TicketsFile): Promise<void> {
-    // Serialize writes so concurrent button clicks don't clobber the file.
     this.writeQueue = this.writeQueue.then(async () => {
       try {
         await mkdir(dirname(this.dbPath), { recursive: true });
