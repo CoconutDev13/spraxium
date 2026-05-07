@@ -2,11 +2,12 @@
 
 ## Supported Versions
 
-Spraxium is currently in early development. Only the current release (`0.0.1`) receives security patches.
+Only the latest release receives security patches.
 
 | Version | Supported          |
 | ------- | ------------------ |
-| 0.1.0   | ✅ |
+| 0.2.x   | ✅ |
+| 0.1.x   | ❌ |
 
 ## Reporting a Vulnerability
 
@@ -48,8 +49,9 @@ The following packages are in scope for security reports:
 - `@spraxium/schedule`
 - `@spraxium/signal`
 - `@spraxium/signal-client`
-- `@spraxium/analytics`
 - `@spraxium/components`
+- `@spraxium/logger`
+- `@spraxium/webhook`
 - `@spraxium/cli`
 
 **Out of scope:**

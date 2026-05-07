@@ -44,6 +44,8 @@ The repository includes runnable example apps in [apps/](./apps/). These are the
 | `@spraxium/signal` | Async unidirectional event signals dispatched through Discord webhooks with schema validation |
 | `@spraxium/signal-client` | Lightweight envelope builder for the signal protocol with zero external dependencies, usable outside a Spraxium application |
 | `@spraxium/env` | Typed environment variable validation with clear errors at startup |
+| `@spraxium/logger` | Centralized structured logging system with table-based output and configurable transports |
+| `@spraxium/webhook` | Decorator-based Discord webhook management with a rich send API for embeds and message components |
 | `@spraxium/cli` | Project scaffolding, module generation, and developer tooling via the `spraxium` CLI |
 
 ## Sharding
