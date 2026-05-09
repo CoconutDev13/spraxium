@@ -37,7 +37,7 @@
   "dependencies": {
     "@discordjs/builders": "^1.14.1",
     "@spraxium/logger": "workspace:*",
-    "discord.js": "^14.26.3",
+    "discord.js": "^14.26.4",
     "reflect-metadata": "^0.2.2"
   },
   "peerDependencies": {

@@ -18,7 +18,7 @@
     "@spraxium/logger": "workspace:*",
     "@spraxium/schedule": "workspace:*",
     "class-validator": "^0.14.2",
-    "discord.js": "^14.26.3",
+    "discord.js": "^14.26.4",
     "drizzle-orm": "^0.45.2",
     "pg": "^8.20.0",
     "reflect-metadata": "^0.2.2",

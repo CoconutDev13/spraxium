@@ -67,8 +67,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/logger
       discord.js:
-        specifier: ^14.26.3
-        version: 14.26.3
+        specifier: ^14.26.4
+        version: 14.26.4
       reflect-metadata:
         specifier: ^0.2.2
         version: 0.2.2
@@ -101,8 +101,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/logger
       discord.js:
-        specifier: ^14.26.3
-        version: 14.26.3
+        specifier: ^14.26.4
+        version: 14.26.4
       reflect-metadata:
         specifier: ^0.2.2
         version: 0.2.2
@@ -138,8 +138,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/logger
       discord.js:
-        specifier: ^14.26.3
-        version: 14.26.3
+        specifier: ^14.26.4
+        version: 14.26.4
       reflect-metadata:
         specifier: ^0.2.2
         version: 0.2.2
@@ -175,8 +175,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/logger
       discord.js:
-        specifier: ^14.26.3
-        version: 14.26.3
+        specifier: ^14.26.4
+        version: 14.26.4
       reflect-metadata:
         specifier: ^0.2.2
         version: 0.2.2
@@ -221,11 +221,11 @@ importers:
         specifier: workspace:*
         version: link:../../packages/schedule
       discord.js:
-        specifier: ^14.26.3
-        version: 14.26.3
+        specifier: ^14.26.4
+        version: 14.26.4
       hono:
-        specifier: ^4.9.8
-        version: 4.12.15
+        specifier: ^4.12.18
+        version: 4.12.18
       reflect-metadata:
         specifier: ^0.2.2
         version: 0.2.2
@@ -270,8 +270,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/logger
       discord.js:
-        specifier: ^14.26.3
-        version: 14.26.3
+        specifier: ^14.26.4
+        version: 14.26.4
       reflect-metadata:
         specifier: ^0.2.2
         version: 0.2.2
@@ -310,8 +310,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/logger
       discord.js:
-        specifier: ^14.26.3
-        version: 14.26.3
+        specifier: ^14.26.4
+        version: 14.26.4
       reflect-metadata:
         specifier: ^0.2.2
         version: 0.2.2
@@ -347,8 +347,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/logger
       discord.js:
-        specifier: ^14.26.3
-        version: 14.26.3
+        specifier: ^14.26.4
+        version: 14.26.4
       reflect-metadata:
         specifier: ^0.2.2
         version: 0.2.2
@@ -396,8 +396,8 @@ importers:
         specifier: ^0.14.2
         version: 0.14.4
       discord.js:
-        specifier: ^14.26.3
-        version: 14.26.3
+        specifier: ^14.26.4
+        version: 14.26.4
       drizzle-orm:
         specifier: ^0.45.2
         version: 0.45.2(@types/better-sqlite3@7.6.13)(@types/pg@8.20.0)(pg@8.20.0)
@@ -451,8 +451,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/schedule
       discord.js:
-        specifier: ^14.26.3
-        version: 14.26.3
+        specifier: ^14.26.4
+        version: 14.26.4
       reflect-metadata:
         specifier: ^0.2.2
         version: 0.2.2
@@ -488,8 +488,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/signal
       discord.js:
-        specifier: ^14.26.3
-        version: 14.26.3
+        specifier: ^14.26.4
+        version: 14.26.4
       reflect-metadata:
         specifier: ^0.2.2
         version: 0.2.2
@@ -525,8 +525,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/logger
       discord.js:
-        specifier: ^14.26.3
-        version: 14.26.3
+        specifier: ^14.26.4
+        version: 14.26.4
       reflect-metadata:
         specifier: ^0.2.2
         version: 0.2.2
@@ -562,8 +562,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/webhook
       discord.js:
-        specifier: ^14.26.3
-        version: 14.26.3
+        specifier: ^14.26.4
+        version: 14.26.4
       reflect-metadata:
         specifier: ^0.2.2
         version: 0.2.2
@@ -640,8 +640,8 @@ importers:
         specifier: ^22.13.0
         version: 22.19.15
       discord.js:
-        specifier: ^14.26.3
-        version: 14.26.3
+        specifier: ^14.26.4
+        version: 14.26.4
       tsdown:
         specifier: ^0.12.0
         version: 0.12.9(typescript@5.9.3)
@@ -664,8 +664,8 @@ importers:
         specifier: '>=9'
         version: 12.8.0
       discord.js:
-        specifier: ^14.26.3
-        version: 14.26.3
+        specifier: ^14.26.4
+        version: 14.26.4
       ioredis:
         specifier: '>=5'
         version: 5.10.1
@@ -708,8 +708,8 @@ importers:
         specifier: ^22.13.0
         version: 22.19.15
       discord.js:
-        specifier: ^14.26.3
-        version: 14.26.3
+        specifier: ^14.26.4
+        version: 14.26.4
       tsdown:
         specifier: ^0.12.0
         version: 0.12.9(typescript@5.9.3)
@@ -754,8 +754,8 @@ importers:
         specifier: ^0.15.1
         version: 0.15.1
       discord.js:
-        specifier: ^14.26.3
-        version: 14.26.3
+        specifier: ^14.26.4
+        version: 14.26.4
       hono:
         specifier: ^4.12.18
         version: 4.12.18
@@ -791,8 +791,8 @@ importers:
         specifier: workspace:*
         version: link:../logger
       discord.js:
-        specifier: ^14.26.3
-        version: 14.26.3
+        specifier: ^14.26.4
+        version: 14.26.4
       reflect-metadata:
         specifier: ^0.2.2
         version: 0.2.2
@@ -844,8 +844,8 @@ importers:
         specifier: ^4.9.0
         version: 4.9.0
       discord.js:
-        specifier: ^14.26.3
-        version: 14.26.3
+        specifier: ^14.26.4
+        version: 14.26.4
       ioredis:
         specifier: '>=5.0.0'
         version: 5.10.1
@@ -887,8 +887,8 @@ importers:
         specifier: workspace:*
         version: link:../logger
       discord.js:
-        specifier: ^14.26.3
-        version: 14.26.3
+        specifier: ^14.26.4
+        version: 14.26.4
       zod:
         specifier: ^3.22.0
         version: 3.25.76
@@ -940,8 +940,8 @@ importers:
         specifier: ^22.0.0
         version: 22.19.15
       discord.js:
-        specifier: ^14.26.3
-        version: 14.26.3
+        specifier: ^14.26.4
+        version: 14.26.4
       tsdown:
         specifier: ^0.12.0
         version: 0.12.9(typescript@5.9.3)
@@ -3645,8 +3645,8 @@ packages:
   /discord-api-types@0.38.42:
     resolution: {integrity: sha512-qs1kya7S84r5RR8m9kgttywGrmmoHaRifU1askAoi+wkoSefLpZP6aGXusjNw5b0jD3zOg3LTwUa3Tf2iHIceQ==}
 
-  /discord.js@14.26.3:
-    resolution: {integrity: sha512-XEKtYn28YFsiJ5l4fLRyikdbo6RD5oFyqfVHQlvXz2104JhH/E8slN28dbky05w3DCrJcNVWvhVvcJCTSl/KIg==}
+  /discord.js@14.26.4:
+    resolution: {integrity: sha512-4oBp8tc6Kf8IDBwAHhbsMaAqx1b5fob9SNasZT7V6yyyUydoO5i5fGuX7TmvRtR+q/WgKRnRViRoAWnG7fNyvA==}
     engines: {node: '>=18'}
     dependencies:
       '@discordjs/builders': 1.14.1
@@ -4233,11 +4233,6 @@ packages:
     engines: {node: '>= 0.4'}
     dependencies:
       function-bind: 1.1.2
-    dev: false
-
-  /hono@4.12.15:
-    resolution: {integrity: sha512-qM0jDhFEaCBb4TxoW7f53Qrpv9RBiayUHo0S52JudprkhvpjIrGoU1mnnr29Fvd1U335ZFPZQY1wlkqgfGXyLg==}
-    engines: {node: '>=16.9.0'}
     dev: false
 
   /hono@4.12.18:
