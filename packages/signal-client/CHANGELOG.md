@@ -1,5 +1,11 @@
 # @spraxium/signal-client
 
+## 0.2.1
+
+### Patch Changes
+
+- fc4c5e0: change packages README with updated code examples
+
 ## 0.1.2
 
 ### Patch Changes
