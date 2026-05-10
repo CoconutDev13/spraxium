@@ -1,5 +1,15 @@
 # @spraxium/http
 
+## 0.2.3
+
+### Patch Changes
+
+- fc4c5e0: change packages README with updated code examples
+- Updated dependencies [fc4c5e0]
+  - @spraxium/common@0.2.2
+  - @spraxium/logger@0.2.2
+  - @spraxium/core@0.2.2
+
 ## 0.2.2
 
 ### Patch Changes
