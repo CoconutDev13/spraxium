@@ -14,7 +14,7 @@ npm install @spraxium/schedule
 
 ```typescript
 import { Injectable } from '@spraxium/common';
-import { Cron, CronExpression, Interval, Timeout } from '@spraxium/schedule';
+import { AfterOnline, Cron, CronExpression, Interval, IntervalExpression, RunOnce, Timeout } from '@spraxium/schedule';
 
 @Injectable()
 export class TaskService {
@@ -23,16 +23,39 @@ export class TaskService {
     // runs every day at midnight in the configured timezone
   }
 
-  @Interval(60_000)
+  @Interval(IntervalExpression.EVERY_MINUTE)
   async heartbeat(): Promise<void> {
     // runs every 60 seconds
   }
 
   @Timeout(5_000)
-  async onceOnStartup(): Promise<void> {
-    // runs once, 5 seconds after the bot goes online
+  async warmup(): Promise<void> {
+    // runs once, 5 seconds after the bot boots
+  }
+
+  @AfterOnline(0)
+  async onReady(): Promise<void> {
+    // runs once, immediately after the Discord ready event fires
+  }
+
+  @RunOnce(new Date('2026-12-31T23:00:00Z'))
+  async sendNewYearPing(): Promise<void> {
+    // runs exactly once at the specified date
   }
 }
+```
+
+```typescript
+// app.module.ts
+import { Module } from '@spraxium/common';
+import { ScheduleModule } from '@spraxium/schedule';
+import { TaskService } from './task.service';
+
+@Module({
+  imports: [ScheduleModule],
+  providers: [TaskService],
+})
+export class AppModule {}
 ```
 
 ## Links

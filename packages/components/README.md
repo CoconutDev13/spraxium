@@ -13,16 +13,30 @@ npm install @spraxium/components
 ## Usage
 
 ```typescript
+// Component class: defines the custom ID, label, and style only.
+import { Button } from '@spraxium/components';
+
+@Button({ customId: 'confirm-action', label: 'Confirm', style: 'success' })
+export class ConfirmButton {}
+```
+
+```typescript
+// Handler class: separated from the component, contains the execution logic.
 import { Injectable } from '@spraxium/common';
-import { Button, ButtonHandler, FlowContext } from '@spraxium/components';
+import { ButtonHandler, FlowContext } from '@spraxium/components';
+import type { SpraxiumContext } from '@spraxium/components';
 import type { ButtonInteraction } from 'discord.js';
+import { Ctx } from '@spraxium/common';
+import { ConfirmButton } from './confirm-button.component';
 
 @Injectable()
-@Button('confirm-action')
+@ButtonHandler(ConfirmButton)
 export class ConfirmButtonHandler {
-  @ButtonHandler()
-  async handle(@FlowContext() interaction: ButtonInteraction): Promise<void> {
-    await interaction.reply({ content: 'Action confirmed!', ephemeral: true });
+  async handle(
+    @FlowContext() ctx: SpraxiumContext<{ action: string }>,
+    @Ctx() interaction: ButtonInteraction,
+  ): Promise<void> {
+    await interaction.reply({ content: `Action confirmed: ${ctx.data.action}`, ephemeral: true });
   }
 }
 ```

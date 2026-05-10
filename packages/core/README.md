@@ -13,15 +13,24 @@ npm install @spraxium/core
 ## Usage
 
 ```typescript
-import { SpraxiumFactory } from '@spraxium/core';
+import { IntentPreset, SpraxiumFactory } from '@spraxium/core';
+import { EnvValidator } from '@spraxium/env';
+import { AppEnv } from './app.env';
 import { AppModule } from './app.module';
 
-async function bootstrap() {
-  const app = await SpraxiumFactory.create(AppModule);
+async function main(): Promise<void> {
+  const environment = EnvValidator.validate(AppEnv);
+
+  const app = await SpraxiumFactory.create({ token: environment.token });
+
+  app.useModule(AppModule);
+  app.provide(AppEnv, environment);
+  app.intents(IntentPreset.Standard);
+
   await app.listen();
 }
 
-bootstrap();
+main();
 ```
 
 ```typescript

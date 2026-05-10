@@ -1,85 +1,66 @@
-# @spraxium/logger
+# @spraxium/schedule
 
-`@spraxium/logger` is the centralized logging package for the Spraxium ecosystem. It provides a zero-runtime-dependency logger built on native ANSI escape codes, with pluggable transports, token masking, configurable timestamp formats, and a static `TableBuilder` utility for rendering CLI tables. All output in Spraxium passes through this package: the core runtime, sharding manager, and command pipeline each use a context-scoped child logger derived from the root `Logger` instance.
+`@spraxium/schedule` brings cron-based job scheduling to Spraxium bots through a decorator API. Annotate any injectable method with `@Cron`, `@Interval`, or `@Timeout`, and the scheduler starts the job automatically once the bot is online. Jobs support standard 5-field and 6-field cron expressions with an optional seconds field, per-job IANA timezone overrides, immediate execution on startup via `runOnInit`, and soft-disabling through the `disabled` option so you can ship a job without activating it.
 
-The package ships four built-in log levels (`info`, `success`, `warn`, `error`) plus `debug` (opt-in via `Logger.setDebug(true)` or the `SPRAXIUM_DEBUG=true` environment variable) and `command` (used by the command logger). Custom levels can be registered at boot time with arbitrary ANSI colors. Transports are fully replaceable: the default `ConsoleTransport` writes to stdout/stderr, and `DiscordTransport` forwards log entries to a Discord channel or webhook. Both can be swapped or augmented with any object that implements the `LogTransport` interface.
+For distributed or sharded bots, the package ships a `RedisScheduleDriver` that uses a distributed lock to guarantee that exactly one instance executes a given job at a time across the whole cluster. The default `MemoryDriver` works for single-process bots with no extra dependencies. The `ScheduleService` is injectable as well, letting you pause, resume, and destroy named jobs programmatically at runtime without modifying the class or redeploying.
 
 ## Installation
 
 ```bash
-npm install @spraxium/logger
+npm install @spraxium/schedule
 ```
 
 ## Usage
 
 ```typescript
-import { Logger, logger } from '@spraxium/logger';
+import { Injectable } from '@spraxium/common';
+import { AfterOnline, Cron, CronExpression, Interval, IntervalExpression, RunOnce, Timeout } from '@spraxium/schedule';
 
-// Root logger: no context label
-logger.info('Bot is starting');
-logger.warn('Config file not found, using defaults');
+@Injectable()
+export class TaskService {
+  @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT, { timezone: 'America/Sao_Paulo' })
+  async dailyCleanup(): Promise<void> {
+    // runs every day at midnight in the configured timezone
+  }
 
-// Context-scoped logger: prefixes every line with [MyService]
-const log = logger.child('MyService');
-log.info('Initialized');
-log.error('Something went wrong');
+  @Interval(IntervalExpression.EVERY_MINUTE)
+  async heartbeat(): Promise<void> {
+    // runs every 60 seconds
+  }
 
-// Or instantiate directly
-const log = new Logger('MyService');
-```
+  @Timeout(5_000)
+  async warmup(): Promise<void> {
+    // runs once, 5 seconds after the bot boots
+  }
 
-```typescript
-// Configure at boot (called automatically by SpraxiumFactory)
-Logger.configure({
-  timestampFormat: 'time-only',   // 'default' | 'iso' | 'time-only' | (d) => string
-  maskTokens: true,
-  levels: [
-    { name: 'deploy', color: 'magenta' },
-  ],
-  discord: {
-    webhookUrl: process.env.LOG_WEBHOOK,
-  },
-});
-```
+  @AfterOnline(0)
+  async onReady(): Promise<void> {
+    // runs once, immediately after the Discord ready event fires
+  }
 
-```typescript
-// Custom transport
-import type { LogTransport, LogEntry } from '@spraxium/logger';
-
-class FileTransport implements LogTransport {
-  readonly name = 'file';
-  log(entry: LogEntry): void {
-    // write to file...
+  @RunOnce(new Date('2026-12-31T23:00:00Z'))
+  async sendNewYearPing(): Promise<void> {
+    // runs exactly once at the specified date
   }
 }
-
-Logger.addTransport(new FileTransport());
 ```
 
 ```typescript
-// CLI table output via TableBuilder
-import { TableBuilder, ANSI, nativeLog } from '@spraxium/logger';
+// app.module.ts
+import { Module } from '@spraxium/common';
+import { ScheduleModule } from '@spraxium/schedule';
+import { TaskService } from './task.service';
 
-const table = TableBuilder.create([
-  ANSI.bold(ANSI.cyan('Command')),
-  ANSI.bold(ANSI.cyan('Status')),
-]);
-table.push([ANSI.cyan('/ping'), ANSI.green('registered')]);
-nativeLog(table.toString());
+@Module({
+  imports: [ScheduleModule],
+  providers: [TaskService],
+})
+export class AppModule {}
 ```
-
-## Timestamp formats
-
-| Value | Example output |
-|---|---|
-| `'default'` | `02/05/2026 - 14:30:00` |
-| `'iso'` | `2026-05-02T17:30:00.000Z` |
-| `'time-only'` | `14:30:00` |
-| `(d) => string` | any custom format |
 
 ## Links
 
-[npm](https://www.npmjs.com/package/@spraxium/logger) · [GitHub](https://github.com/spraxium/spraxium) · [Documentation](https://spraxium.com)
+[npm](https://www.npmjs.com/package/@spraxium/schedule) · [GitHub](https://github.com/spraxium/spraxium) · [node-cron](https://github.com/node-cron/node-cron) · [Documentation](https://spraxium.com)
 
 ## License
 

@@ -35,18 +35,31 @@ export class GreetService {
 ```
 
 ```typescript
+// app.module.ts
 import { Module } from '@spraxium/common';
 import { I18nModule } from '@spraxium/i18n';
 
 @Module({
-  imports: [
-    I18nModule.forRoot({
-      defaultLocale: 'en-US',
-      fallbackLocale: 'en-US',
-    }),
-  ],
+  imports: [I18nModule],
 })
 export class AppModule {}
+```
+
+```typescript
+// spraxium.config.ts: i18n config lives here, not in the module import
+import { defineConfig } from '@spraxium/core';
+import { defineI18n } from '@spraxium/i18n';
+
+export default defineConfig({
+  plugins: [
+    defineI18n({
+      defaultLocale: 'en-US',
+      references: [
+        { name: 'commands', path: './locales' },
+      ],
+    }),
+  ],
+});
 ```
 
 ## Links

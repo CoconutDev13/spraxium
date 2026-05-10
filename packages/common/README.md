@@ -23,11 +23,17 @@ export class PingService {
   }
 }
 
+// Command class: defines the name, description, and options only.
 @SlashCommand({ name: 'ping', description: 'Replies with pong' })
 export class PingCommand {
+  build() {}
+}
+
+// Handler class: separated from the command, contains the execution logic.
+@SlashCommandHandler(PingCommand)
+export class PingHandler {
   constructor(private readonly pingService: PingService) {}
 
-  @SlashCommandHandler()
   async handle(@Ctx() interaction: ChatInputCommandInteraction): Promise<void> {
     await interaction.reply(this.pingService.ping());
   }
@@ -36,6 +42,7 @@ export class PingCommand {
 @Module({
   providers: [PingService],
   commands: [PingCommand],
+  handlers: [PingHandler],
 })
 export class PingModule {}
 ```

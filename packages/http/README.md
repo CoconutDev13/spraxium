@@ -13,35 +13,54 @@ npm install @spraxium/http
 ## Usage
 
 ```typescript
-import { Injectable } from '@spraxium/common';
-import { HttpController, HttpGet, HttpCtx } from '@spraxium/http';
+// status.controller.ts
+import { HttpController, HttpCtx, HttpGet } from '@spraxium/http';
 import type { Context } from 'hono';
 
-@Injectable()
 @HttpController('/status')
 export class StatusController {
   @HttpGet('/')
-  async getStatus(@HttpCtx() ctx: Context) {
+  async index(@HttpCtx() ctx: Context): Promise<Response> {
     return ctx.json({ status: 'online' });
   }
 }
 ```
 
 ```typescript
-import { Module } from '@spraxium/common';
+// http.module.ts: decorated with @HttpClientModule, not @Module
 import { HttpClientModule } from '@spraxium/http';
-import { StatusController } from './status.controller';
+import { StatusController } from './controllers/status.controller';
+
+@HttpClientModule({
+  controllers: [StatusController],
+})
+export class AppHttpModule {}
+```
+
+```typescript
+// app.module.ts
+import { Module } from '@spraxium/common';
+import { HttpModule } from '@spraxium/http';
 
 @Module({
-  imports: [
-    HttpClientModule.forRoot({
+  imports: [HttpModule],
+})
+export class AppModule {}
+```
+
+```typescript
+// spraxium.config.ts: HTTP server config lives here, not in the module decorator
+import { defineConfig } from '@spraxium/core';
+import { defineHttp } from '@spraxium/http';
+
+export default defineConfig({
+  plugins: [
+    defineHttp({
       port: 3000,
       cors: { origins: ['https://dashboard.example.com'] },
     }),
   ],
-  providers: [StatusController],
-})
-export class AppModule {}
+});
 ```
 
 ## Links

@@ -13,30 +13,41 @@ npm install @spraxium/env
 ## Usage
 
 ```typescript
-import { EnvConfig, Env } from '@spraxium/env';
+import { Env, EnvSchema, IsBoolean, IsPort, SpraxiumBaseEnv } from '@spraxium/env';
 
-@EnvConfig()
-export class AppConfig {
-  @Env('DISCORD_TOKEN', { secret: true })
-  token: string;
+@EnvSchema()
+export class AppConfig extends SpraxiumBaseEnv {
+  @Env('PORT')
+  @IsPort()
+  port!: number;
 
-  @Env('COMMAND_PREFIX', { default: '!' })
-  prefix: string;
+  @Env('COMMAND_PREFIX', { default: '!', secret: false })
+  prefix!: string;
 
-  @Env('DEBUG', { default: false })
-  debug: boolean;
+  @Env('DEBUG', { default: false, secret: false })
+  @IsBoolean()
+  debug!: boolean;
 }
 ```
 
 ```typescript
-import { Module } from '@spraxium/common';
-import { EnvModule } from '@spraxium/env';
+import { IntentPreset, SpraxiumFactory } from '@spraxium/core';
+import { EnvValidator } from '@spraxium/env';
 import { AppConfig } from './app.config';
+import { AppModule } from './app.module';
 
-@Module({
-  imports: [EnvModule.forRoot(AppConfig)],
-})
-export class AppModule {}
+async function main(): Promise<void> {
+  const config = EnvValidator.validate(AppConfig);
+
+  const app = await SpraxiumFactory.create({ token: config.token });
+  app.useModule(AppModule);
+  app.provide(AppConfig, config);
+  app.intents(IntentPreset.Standard);
+
+  await app.listen();
+}
+
+main();
 ```
 
 ## Links

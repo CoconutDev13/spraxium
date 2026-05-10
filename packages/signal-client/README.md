@@ -16,28 +16,29 @@ npm install @spraxium/signal-client
 import { SignalClient } from '@spraxium/signal-client';
 
 const client = new SignalClient({
-  webhooks: [
+  webhookUrls: [
     'https://discord.com/api/webhooks/111/token-a',
     'https://discord.com/api/webhooks/222/token-b',
   ],
+  hmacSecret: process.env.SIGNAL_HMAC_SECRET!,
 });
 
-await client.send({
-  event: 'config.update',
-  guildId: '123456789',
-  payload: { prefix: '!' },
-});
+await client.send('config.update', '123456789', { prefix: '!' });
 ```
 
 ```typescript
 // With Redis fallback for resilience
-import { SignalClient, RedisFallbackStore } from '@spraxium/signal-client';
-import Redis from 'ioredis';
+import { SignalClient } from '@spraxium/signal-client';
 
 const client = new SignalClient({
-  webhooks: ['https://discord.com/api/webhooks/111/token-a'],
+  webhookUrls: ['https://discord.com/api/webhooks/111/token-a'],
+  hmacSecret: process.env.SIGNAL_HMAC_SECRET!,
+  rateLimitStrategy: 'wait',   // 'skip' (default) | 'wait'
   fallback: {
-    store: new RedisFallbackStore(new Redis()),
+    enabled: true,
+    store: 'redis',
+    redisUrl: process.env.REDIS_URL,
+    maxAttempts: 10,
   },
 });
 ```
