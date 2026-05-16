@@ -256,10 +256,6 @@ export class V2Service {
               throw new Error('[V2Service] @V2Section dynamic button produced no button.');
             }
             const [button] = buttons;
-            if (!button) {
-              throw new Error('[V2Service] @V2Section dynamic button produced an invalid button.');
-            }
-
             sec.setButtonAccessory(button);
             return sec;
           });
