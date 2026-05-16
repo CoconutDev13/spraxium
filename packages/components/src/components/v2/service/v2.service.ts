@@ -257,7 +257,7 @@ export class V2Service {
             }
             const [button] = buttons;
             if (!button) {
-              throw new Error('[V2Service] @V2Section dynamic button produced no button.');
+              throw new Error('[V2Service] @V2Section dynamic button produced an invalid button.');
             }
 
             sec.setButtonAccessory(button);
@@ -273,6 +273,9 @@ export class V2Service {
             throw new Error('[V2Service] @V2Section button row produced no components.');
           }
           const rawButton = components[0] as ReturnType<ButtonBuilder['toJSON']>;
+          if (!rawButton) {
+            throw new Error('[V2Service] @V2Section button row produced an invalid first component.');
+          }
           sec.setButtonAccessory(ButtonBuilder.from(rawButton));
         }
         return sec;
