@@ -252,6 +252,9 @@ export class V2Service {
             typeof cfg.dynamic.item === 'function' ? cfg.dynamic.item(data) : (cfg.dynamic.item ?? data);
 
           return this.buttons.buildDynamicButtons(cfg.dynamic.button, [item], context).then((buttons) => {
+            if (buttons.length === 0) {
+              throw new Error('[V2Service] @V2Section dynamic button produced no button.');
+            }
             const [button] = buttons;
             if (!button) {
               throw new Error('[V2Service] @V2Section dynamic button produced no button.');
