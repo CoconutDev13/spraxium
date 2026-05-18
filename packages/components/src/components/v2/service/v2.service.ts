@@ -251,11 +251,11 @@ export class V2Service {
           const item =
             typeof cfg.dynamic.item === 'function' ? cfg.dynamic.item(data) : (cfg.dynamic.item ?? data);
 
-          return this.buttons.buildDynamicButtons(cfg.dynamic.button, [item], context).then(([button]) => {
-            if (!button) {
+          return this.buttons.buildDynamicButtons(cfg.dynamic.button, [item], context).then((buttons) => {
+            if (buttons.length === 0) {
               throw new Error('[V2Service] @V2Section dynamic button produced no button.');
             }
-
+            const [button] = buttons;
             sec.setButtonAccessory(button);
             return sec;
           });
@@ -264,7 +264,14 @@ export class V2Service {
             cfg.button,
             context as SpraxiumContext<Record<string, unknown>>,
           ) as ActionRowBuilder<ButtonBuilder>;
-          const rawButton = row.toJSON().components[0] as ReturnType<ButtonBuilder['toJSON']>;
+          const components = row.toJSON().components;
+          if (components.length === 0) {
+            throw new Error('[V2Service] @V2Section button row produced no components.');
+          }
+          const rawButton = components[0] as ReturnType<ButtonBuilder['toJSON']>;
+          if (!rawButton) {
+            throw new Error('[V2Service] @V2Section button row produced an invalid first component.');
+          }
           sec.setButtonAccessory(ButtonBuilder.from(rawButton));
         }
         return sec;
@@ -326,7 +333,7 @@ export class V2Service {
           const resolvedRowData = typeof cfg.rowData === 'function' ? cfg.rowData(data) : cfg.rowData;
           return this.selects
             .buildDynamic(firstClass, resolvedRowData, context as SpraxiumContext<Record<string, unknown>>)
-            .then(([row]) => row);
+            .then(([dynamicSelectRow]) => dynamicSelectRow);
         }
 
         return this.buttons.build(rawComponents, context as SpraxiumContext<Record<string, unknown>>);
@@ -388,8 +395,8 @@ export class V2Service {
   ): Promise<Array<ActionRowBuilder<ButtonBuilder>>> {
     if (cfg.dynamic) {
       const items = typeof cfg.items === 'function' ? cfg.items(data) : (cfg.items ?? []);
-      const [rows] = await this.buttons.buildDynamic(cfg.dynamic, items, context);
-      return rows;
+      const [buttonRows] = await this.buttons.buildDynamic(cfg.dynamic, items, context);
+      return buttonRows;
     }
     if (cfg.components) {
       const classes = typeof cfg.components === 'function' ? cfg.components(data) : cfg.components;
