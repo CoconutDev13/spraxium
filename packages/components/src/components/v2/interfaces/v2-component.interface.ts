@@ -128,4 +128,8 @@ export interface V2ContainerMeta {
 export interface V2SectionFluentConfig {
   text: string;
   button?: AnyConstructor;
+  dynamic?: {
+    button: AnyConstructor;
+    item?: unknown;
+  };
 }

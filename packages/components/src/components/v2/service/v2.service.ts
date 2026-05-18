@@ -112,7 +112,7 @@ export class V2Service {
   }
 
   container(opts: V2ContainerMeta = {}, context?: SpraxiumContext<unknown>): V2ContainerFluentBuilder {
-    return new V2ContainerFluentBuilder(opts, context);
+    return new V2ContainerFluentBuilder(opts, context, this.buttons);
   }
 
   text(content: string | DescriptionBuilder): TextDisplayBuilder {
