@@ -1,5 +1,15 @@
 # @spraxium/i18n
 
+## 1.0.0
+
+### Patch Changes
+
+- Updated dependencies [dcd0fdd]
+  - @spraxium/components@0.3.0
+  - @spraxium/logger@0.2.3
+  - @spraxium/common@0.2.3
+  - @spraxium/core@0.2.3
+
 ## 0.2.3
 
 ### Patch Changes
