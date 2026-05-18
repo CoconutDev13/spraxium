@@ -8,7 +8,7 @@ import type { WizardData } from './flow-wizard-command.handler';
 @ButtonHandler(FlowWizardCancelButton)
 export class FlowWizardCancelCommandHandler {
   async handle(
-    @FlowContext() ctx: SpraxiumContext<WizardData>,
+    @FlowContext() _ctx: SpraxiumContext<WizardData>,
     @Ctx() interaction: ButtonInteraction,
   ): Promise<void> {
     await interaction.update({

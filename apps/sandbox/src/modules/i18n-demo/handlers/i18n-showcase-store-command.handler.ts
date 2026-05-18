@@ -1,5 +1,5 @@
 import { Ctx, SlashCommandHandler } from '@spraxium/common';
-import { I18nService, type InterpolationVars, MemoryStore, defineTranslations } from '@spraxium/i18n';
+import { I18nService, type InterpolationVars } from '@spraxium/i18n';
 import type { ChatInputCommandInteraction } from 'discord.js';
 import { I18nShowcaseCommand } from '../commands/i18n-showcase.command';
 

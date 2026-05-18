@@ -5,7 +5,7 @@ import { Client } from 'discord.js';
 import { defineComponents } from '../../components.config';
 import { ModalFieldCache } from '../../components/modal/cache';
 import { ComponentDispatcher } from '../dispatcher';
-import { initContextAdapter } from './context-adapter.factory';
+import { ContextAdapterFactory } from './context-adapter.factory';
 
 /**
  * Lifecycle hook that initializes the component dispatcher on application boot.
@@ -21,7 +21,7 @@ export class ComponentLifecycle implements SpraxiumOnBoot {
     const config = ConfigStore.getPluginConfig(defineComponents);
     if (config) this.dispatcher.setConfig(config);
 
-    await initContextAdapter(config?.context?.storage, config?.context?.defaultTtl);
+    await ContextAdapterFactory.init(config?.context?.storage, config?.context?.defaultTtl);
 
     // Modal validation prefill cache shares the component context adapter so
     // half-submitted modals survive restarts. Hydrate before processing

@@ -1,11 +1,5 @@
 import { Ctx } from '@spraxium/common';
-import {
-  type ButtonService,
-  type ContextService,
-  FlowContext,
-  SelectedValues,
-  StringSelectHandler,
-} from '@spraxium/components';
+import { type ButtonService, FlowContext, SelectedValues, StringSelectHandler } from '@spraxium/components';
 import type { SpraxiumContext } from '@spraxium/components';
 import type { AnySelectMenuInteraction } from 'discord.js';
 import { FlowCategorySelect } from '../components/flow-category-select.component';
@@ -22,10 +16,7 @@ const CATEGORY_LABEL: Record<string, string> = {
 
 @StringSelectHandler(FlowCategorySelect)
 export class FlowCategorySelectCommandHandler {
-  constructor(
-    private readonly buttons: ButtonService,
-    private readonly contexts: ContextService,
-  ) {}
+  constructor(private readonly buttons: ButtonService) {}
 
   async handle(
     @SelectedValues() values: string[],

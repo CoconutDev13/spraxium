@@ -1,6 +1,5 @@
 import { Guard, GuardOption } from '@spraxium/common';
 import type { ExecutionContext, SpraxiumGuard } from '@spraxium/common';
-import { ModalSubmitInteraction } from 'discord.js';
 
 /**
  * Blocks the handler unless the invoking user has a specific role.

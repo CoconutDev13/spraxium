@@ -7,7 +7,7 @@ import {
   desc,
   v2text,
 } from '@spraxium/components';
-import type { LeaderboardData, Player } from '../leaderboard.data';
+import type { LeaderboardData } from '../leaderboard.data';
 import { PlayerButton } from './player-button.component';
 
 const MEDALS = ['🥇', '🥈', '🥉'];

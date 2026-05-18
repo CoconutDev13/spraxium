@@ -5,7 +5,7 @@ import { SuggestionModal } from '../components/suggestion-modal.component';
 @ModalHandler(SuggestionModal)
 export class SuggestionModalSubmitCommandHandler {
   async handle(
-    @ModalField('title') titleTwo: string,
+    @ModalField('title') _titleTwo: string,
     @ModalTextField('title') title: string,
     @ModalTextField('details') details: string,
     @ModalTextField('url') url: string,

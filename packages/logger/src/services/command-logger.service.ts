@@ -39,7 +39,7 @@ export class CommandLogger {
       const guildId = i.guildId ?? 'N/A';
       const channel = i.channelId;
 
-      CommandLogger.logger.log('command', `/${command} by ${user} in ${guild} (${guildId})`, {
+      log.log('command', `/${command} by ${user} in ${guild} (${guildId})`, {
         command,
         user,
         userId,

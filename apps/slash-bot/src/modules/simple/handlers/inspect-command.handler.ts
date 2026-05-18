@@ -19,7 +19,7 @@ import { InspectCommand } from '../commands/inspect.command';
 export class InspectHandler {
   async handle(
     @Ctx() interaction: ChatInputCommandInteraction,
-    @SlashOpt('text') rawText: string, // deprecated
+    @SlashOpt('text') _rawText: string, // deprecated
     @SlashOption('text') text: string,
     @SlashIntegerOption('count') count: number | null,
     @SlashNumberOption('ratio') ratio: number | null,

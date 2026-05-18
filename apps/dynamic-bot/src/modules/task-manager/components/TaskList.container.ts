@@ -1,4 +1,4 @@
-import { V2Container, V2Dynamic, V2Text, desc, v2row, v2section, v2sep } from '@spraxium/components';
+import { V2Container, V2Dynamic, V2Text, desc, v2section, v2sep } from '@spraxium/components';
 import { SeparatorSpacingSize } from 'discord.js';
 import { Task } from '../task-manager.data';
 import { ViewTaskButton } from './ViewTask.button';

@@ -4,7 +4,7 @@ import type { Ticket } from '../tickets.data';
 
 @DynamicButton({ baseId: 'assign-ticket', payloadTtl: 60 * 60 * 24 })
 export class AssignTicketButton {
-  static render(ticket: Ticket): ButtonRenderConfig {
+  static render(_ticket: Ticket): ButtonRenderConfig {
     return {
       label: 'Assign to me',
       style: 'primary',
