@@ -1,5 +1,5 @@
 ﻿import { Injectable } from '@spraxium/common';
-import type { AppEnv } from '../../../app.env';
+import { AppEnv } from '../../../app.env';
 
 @Injectable()
 export class StatusHttpService {

@@ -1,5 +1,5 @@
 import { Ctx, SlashCommandHandler } from '@spraxium/common';
-import type { ModalService } from '@spraxium/components';
+import { ModalService } from '@spraxium/components';
 import type { ChatInputCommandInteraction } from 'discord.js';
 import { ProfileCommand } from '../commands/profile.command';
 import { ProfileModal } from '../components/profile.modal.component';

@@ -1,5 +1,12 @@
 # @spraxium/env
 
+## 0.2.2
+
+### Patch Changes
+
+- Updated dependencies [dcd0fdd]
+  - @spraxium/logger@0.2.3
+
 ## 0.2.1
 
 ### Patch Changes

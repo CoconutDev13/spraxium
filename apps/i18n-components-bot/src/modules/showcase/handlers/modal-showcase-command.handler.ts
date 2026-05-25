@@ -1,6 +1,6 @@
 import { Ctx, SlashCommandHandler } from '@spraxium/common';
 import { buildLocalizedModal } from '@spraxium/i18n';
-import type { I18nService } from '@spraxium/i18n';
+import { I18nService } from '@spraxium/i18n';
 import type { ChatInputCommandInteraction } from 'discord.js';
 import { ShowcaseCommand } from '../commands/showcase.command';
 import { FeedbackModal } from '../components/feedback-modal.component';

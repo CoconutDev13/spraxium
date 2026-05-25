@@ -1,5 +1,5 @@
 import { Ctx, SlashCommandHandler } from '@spraxium/common';
-import type { V2Service } from '@spraxium/components';
+import { V2Service } from '@spraxium/components';
 import { type I18nService, buildLocalizedV2 } from '@spraxium/i18n';
 import { type ChatInputCommandInteraction, MessageFlags } from 'discord.js';
 import { ShowcaseCommand } from '../commands/showcase.command';

@@ -1,5 +1,5 @@
 import { Ctx, SlashCommandHandler } from '@spraxium/common';
-import type { ModalService } from '@spraxium/components';
+import { ModalService } from '@spraxium/components';
 import type { ChatInputCommandInteraction } from 'discord.js';
 import { SuggestionCommand } from '../commands/suggestion.command';
 import type { SuggestionData } from '../components/suggestion-data.interface';

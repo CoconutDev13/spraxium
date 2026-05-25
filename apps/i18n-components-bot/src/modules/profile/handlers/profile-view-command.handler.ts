@@ -1,6 +1,6 @@
 import { Ctx, SlashCommandHandler } from '@spraxium/common';
 import { buildLocalizedButton, buildLocalizedEmbed, buildLocalizedSelect } from '@spraxium/i18n';
-import type { I18nService } from '@spraxium/i18n';
+import { I18nService } from '@spraxium/i18n';
 import type { ChatInputCommandInteraction } from 'discord.js';
 import { ProfileCommand } from '../commands/profile.command';
 import { EditProfileButton } from '../components/edit-profile-button.component';

@@ -1,6 +1,6 @@
 import { Ctx } from '@spraxium/common';
 import { ButtonHandler } from '@spraxium/components';
-import type { I18nService } from '@spraxium/i18n';
+import { I18nService } from '@spraxium/i18n';
 import type { ButtonInteraction } from 'discord.js';
 import { ShareProfileButton } from '../components/share-profile-button.component';
 

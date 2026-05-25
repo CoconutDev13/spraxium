@@ -1,5 +1,5 @@
 ﻿import { Ctx, SlashCommandHandler, SlashStringOption } from '@spraxium/common';
-import type { I18nService } from '@spraxium/i18n';
+import { I18nService } from '@spraxium/i18n';
 import type { ChatInputCommandInteraction } from 'discord.js';
 import { LocaleCommand } from '../commands/locale.command';
 

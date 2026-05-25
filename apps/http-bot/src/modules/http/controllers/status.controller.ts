@@ -1,6 +1,6 @@
 ﻿import { HttpController, HttpCtx, HttpGet } from '@spraxium/http';
 import type { Context } from 'hono';
-import type { StatusHttpService } from '../services/status-http.service';
+import { StatusHttpService } from '../services/status-http.service';
 
 @HttpController('/status')
 export class StatusController {

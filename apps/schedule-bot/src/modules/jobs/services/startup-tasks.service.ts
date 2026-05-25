@@ -1,7 +1,7 @@
 import { Injectable } from '@spraxium/common';
 import { Logger } from '@spraxium/logger';
 import { AfterOnline, Timeout, TimeoutExpression } from '@spraxium/schedule';
-import type { Client } from 'discord.js';
+import { Client } from 'discord.js';
 
 @Injectable()
 export class StartupTasksService {

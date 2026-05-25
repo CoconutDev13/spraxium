@@ -1,5 +1,5 @@
 import { Ctx, SlashCommandHandler } from '@spraxium/common';
-import type { V2Service } from '@spraxium/components';
+import { V2Service } from '@spraxium/components';
 import { type ChatInputCommandInteraction, MessageFlags } from 'discord.js';
 import { V2Command } from '../commands/v2.command';
 import { TopUsersContainer, type TopUsersData } from '../schemas/top-users.container';

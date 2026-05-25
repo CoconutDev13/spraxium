@@ -1,6 +1,6 @@
 import { Ctx } from '@spraxium/common';
 import { StringSelectHandler } from '@spraxium/components';
-import type { I18nService } from '@spraxium/i18n';
+import { I18nService } from '@spraxium/i18n';
 import type { StringSelectMenuInteraction } from 'discord.js';
 import { LocaleSelect } from '../components/locale-select.component';
 

@@ -1,5 +1,5 @@
 import { Ctx, SlashCommandHandler } from '@spraxium/common';
-import type { ButtonService, ContextService } from '@spraxium/components';
+import { ButtonService, ContextService } from '@spraxium/components';
 import type { ChatInputCommandInteraction } from 'discord.js';
 import { MessageFlags } from 'discord.js';
 import { FlowCommand } from '../commands/flow.command';
