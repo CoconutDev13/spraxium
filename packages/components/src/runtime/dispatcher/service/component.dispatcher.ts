@@ -47,6 +47,7 @@ export class ComponentDispatcher {
     }
     this.buttons.setPayloadService(this.payloads);
     this.selects.setPayloadService(this.payloads);
+    this.modals.setPayloadService(this.payloads);
     this.modals.bind(client, this.config);
     this.selects.bind(client);
     this.buttons.bind(client);

@@ -19,14 +19,21 @@ import {
 } from '../../../components/modal';
 import { ComponentExecutionContext } from '../../guards';
 import type { ComponentsConfig } from '../../lifecycle';
+import { PayloadService } from '../../payload';
 import { reportHandlerError } from '../helpers/handler-error.helper';
+import { type InlineParams, decodeInlineParams, splitCustomId } from '../helpers/split-custom-id.helper';
 import type { Constructor, ResolvedModalHandler } from '../interfaces';
 
 export class ModalDispatcher {
   private readonly handlers: Array<ResolvedModalHandler> = [];
+  private payloads = new PayloadService();
 
   get size(): number {
     return this.handlers.length;
+  }
+
+  setPayloadService(svc: PayloadService): void {
+    this.payloads = svc;
   }
 
   register(ctor: Constructor, instance: unknown): void {
@@ -48,7 +55,7 @@ export class ModalDispatcher {
     }
 
     this.handlers.push({
-      customId: componentMeta.id,
+      baseId: componentMeta.id,
       handlerCtor: ctor,
       handlerInstance: instance,
       builderCtor,
@@ -62,10 +69,11 @@ export class ModalDispatcher {
       if (!interaction.isModalSubmit()) return;
 
       const modal = interaction as ModalSubmitInteraction;
-      const resolved = this.handlers.find((h) => h.customId === modal.customId);
+      const { baseId, inlineParams, payloadId } = splitCustomId(modal.customId);
+      const resolved = this.handlers.find((h) => h.baseId === baseId);
       if (!resolved) return;
 
-      void this.handleSubmission(modal, resolved, config);
+      void this.handleSubmission(modal, resolved, config, inlineParams, payloadId);
     });
   }
 
@@ -73,13 +81,15 @@ export class ModalDispatcher {
     modal: ModalSubmitInteraction,
     resolved: ResolvedModalHandler,
     config?: ComponentsConfig,
+    inlineParams?: string,
+    payloadId?: string,
   ): Promise<void> {
     const handlerName = `@ModalHandler(${resolved.handlerCtor.name})`;
     try {
       const guardPassed = await GuardExecutor.execute(
         resolved.handlerCtor,
         'handle',
-        new ComponentExecutionContext(modal, resolved.customId),
+        new ComponentExecutionContext(modal, resolved.baseId),
       );
       if (!guardPassed) return;
 
@@ -89,13 +99,27 @@ export class ModalDispatcher {
         return;
       }
 
-      const args = this.resolveHandlerArgs(modal, resolved);
+      // Resolve payload from store if requested by the handler
+      let payload: unknown;
+      const proto = resolved.handlerCtor.prototype as Record<string | symbol, unknown>;
+      const payloadIndex: number | undefined = Reflect.getMetadata(
+        COMPONENT_METADATA_KEYS.MODAL_PAYLOAD_PARAM,
+        proto,
+        'handle',
+      );
+      if (payloadIndex !== undefined && payloadId) {
+        payload = await this.payloads.get(payloadId);
+      }
+
+      const params = decodeInlineParams(inlineParams);
+      const args = this.resolveHandlerArgs(modal, resolved, params, payload);
 
       const fn = (resolved.handlerInstance as Record<string | symbol, (...a: Array<unknown>) => unknown>)
         .handle;
       if (typeof fn !== 'function') return;
       await Promise.resolve(fn.call(resolved.handlerInstance, ...args));
 
+      if (payloadId) await this.payloads.delete(payloadId);
       this.clearCacheOnSuccess(resolved, modal);
     } catch (err) {
       await reportHandlerError(
@@ -121,7 +145,7 @@ export class ModalDispatcher {
     );
     if (cacheConfig) {
       ModalFieldCache.set(
-        ModalFieldCache.key(resolved.customId, modal.user.id),
+        ModalFieldCache.key(resolved.baseId, modal.user.id),
         ModalValidatorRunner.collectAllValues(modal),
         cacheConfig.ttl,
       );
@@ -141,9 +165,24 @@ export class ModalDispatcher {
     });
   }
 
-  private resolveHandlerArgs(modal: ModalSubmitInteraction, resolved: ResolvedModalHandler): Array<unknown> {
+  private resolveHandlerArgs(
+    modal: ModalSubmitInteraction,
+    resolved: ResolvedModalHandler,
+    params: InlineParams | undefined,
+    payload: unknown,
+  ): Array<unknown> {
     const proto = resolved.handlerCtor.prototype as Record<string | symbol, unknown>;
     const ctxIndex: number | undefined = Reflect.getMetadata(METADATA_KEYS.CTX_PARAM, proto, 'handle');
+    const paramsIndex: number | undefined = Reflect.getMetadata(
+      COMPONENT_METADATA_KEYS.MODAL_PARAMS_PARAM,
+      proto,
+      'handle',
+    );
+    const payloadIndex: number | undefined = Reflect.getMetadata(
+      COMPONENT_METADATA_KEYS.MODAL_PAYLOAD_PARAM,
+      proto,
+      'handle',
+    );
     const fieldParams: Array<{ index: number; fieldId: string }> =
       Reflect.getMetadata(COMPONENT_METADATA_KEYS.MODAL_FIELD_PARAM, proto, 'handle') ?? [];
 
@@ -151,6 +190,8 @@ export class ModalDispatcher {
 
     const args: Array<unknown> = [];
     if (ctxIndex !== undefined) args[ctxIndex] = modal;
+    if (paramsIndex !== undefined) args[paramsIndex] = params ?? {};
+    if (payloadIndex !== undefined) args[payloadIndex] = payload;
 
     for (const { index, fieldId } of fieldParams) {
       args[index] = this.resolveFieldValue(modal, fieldId, fieldDefById.get(fieldId));
@@ -233,7 +274,7 @@ export class ModalDispatcher {
       resolved.builderCtor,
     );
     if (cacheConfig) {
-      ModalFieldCache.delete(ModalFieldCache.key(resolved.customId, modal.user.id));
+      ModalFieldCache.delete(ModalFieldCache.key(resolved.baseId, modal.user.id));
     }
   }
 }

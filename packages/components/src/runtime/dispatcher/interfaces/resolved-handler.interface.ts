@@ -1,7 +1,7 @@
 import type { Constructor } from '../types/constructor.type';
 
 export interface ResolvedModalHandler {
-  customId: string;
+  baseId: string;
   handlerCtor: Constructor;
   handlerInstance: unknown;
   builderCtor: Constructor;

@@ -4,4 +4,6 @@ export { ButtonPayload } from './button-payload.decorator';
 export { ButtonParams } from './button-params.decorator';
 export { SelectPayload } from './select-payload.decorator';
 export { SelectParams } from './select-params.decorator';
+export { ModalParams } from './modal-params.decorator';
+export { ModalPayload } from './modal-payload.decorator';
 export { PayloadRef } from './payload-ref.decorator';

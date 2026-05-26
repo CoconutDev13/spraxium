@@ -50,21 +50,60 @@ export class ButtonDispatcher {
         COMPONENT_METADATA_KEYS.BUTTON_COMPONENT,
         componentClass,
       );
-      if (!componentMeta) {
-        throw new Error(
-          `${ctor.name}: @ButtonHandler references ${componentClass.name} which is not decorated with @Button().`,
-        );
-      }
-      if (componentMeta.isLink) {
-        throw new Error(
-          `${ctor.name}: @ButtonHandler references ${componentClass.name} which is a @LinkButton; link buttons do not fire interactions.`,
-        );
+      if (componentMeta) {
+        if (componentMeta.isLink) {
+          throw new Error(
+            `${ctor.name}: @ButtonHandler references ${componentClass.name} which is a @LinkButton; link buttons do not fire interactions.`,
+          );
+        }
+        const customId = (componentMeta as ButtonComponentMeta & { customId: string }).customId;
+        this.assertNoCollision(customId);
+        this.staticHandlers.push({ customId, handlerCtor: ctor, handlerInstance: instance });
+        return;
       }
 
-      const customId = (componentMeta as ButtonComponentMeta & { customId: string }).customId;
-      this.assertNoCollision(customId);
-      this.staticHandlers.push({ customId, handlerCtor: ctor, handlerInstance: instance });
-      return;
+      // Also support @DynamicButton() components through @ButtonHandler (unified API).
+      const dyn: DynamicButtonComponentMeta | undefined = Reflect.getMetadata(
+        COMPONENT_METADATA_KEYS.BUTTON_DYNAMIC,
+        componentClass,
+      );
+      if (dyn) {
+        const proto = ctor.prototype as Record<string | symbol, unknown>;
+        const payloadIndex: number | undefined = Reflect.getMetadata(
+          COMPONENT_METADATA_KEYS.BUTTON_PAYLOAD_PARAM,
+          proto,
+          'handle',
+        );
+        const paramsIndex: number | undefined = Reflect.getMetadata(
+          COMPONENT_METADATA_KEYS.BUTTON_PARAMS_PARAM,
+          proto,
+          'handle',
+        );
+        const payloadRefIndex: number | undefined = Reflect.getMetadata(
+          COMPONENT_METADATA_KEYS.PAYLOAD_REF_PARAM,
+          proto,
+          'handle',
+        );
+        this.assertDecoratorCompatibility({
+          handlerName: ctor.name,
+          encoding: dyn.encoding,
+          payloadIndex,
+          paramsIndex,
+          payloadRefIndex,
+        });
+        this.assertNoCollision(dyn.baseId);
+        this.dynamicHandlers.push({
+          baseId: dyn.baseId,
+          encoding: dyn.encoding,
+          handlerCtor: ctor,
+          handlerInstance: instance,
+        });
+        return;
+      }
+
+      throw new Error(
+        `${ctor.name}: @ButtonHandler references ${componentClass.name} which is not decorated with @Button() or @DynamicButton().`,
+      );
     }
 
     const dynamicMeta: DynamicButtonHandlerMeta | undefined = Reflect.getMetadata(

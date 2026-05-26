@@ -60,18 +60,42 @@ export class SelectDispatcher {
         COMPONENT_METADATA_KEYS.SELECT_COMPONENT,
         componentClass,
       );
-      if (!componentMeta) {
-        throw new Error(
-          `${ctor.name}: select handler references ${componentClass.name} which is not decorated with a select decorator.`,
-        );
+      if (componentMeta) {
+        this.assertNoCollision(componentMeta.customId);
+        this.handlers.push({
+          customId: componentMeta.customId,
+          handlerCtor: ctor,
+          handlerInstance: instance,
+        });
+        return;
       }
-      this.assertNoCollision(componentMeta.customId);
-      this.handlers.push({
-        customId: componentMeta.customId,
-        handlerCtor: ctor,
-        handlerInstance: instance,
-      });
-      return;
+
+      // Also support @DynamicStringSelect() components through @SelectHandler (unified API).
+      const dyn: DynamicSelectComponentMeta | undefined = Reflect.getMetadata(
+        COMPONENT_METADATA_KEYS.SELECT_DYNAMIC,
+        componentClass,
+      );
+      if (dyn) {
+        if (dyn.encoding === 'inline') {
+          const proto = ctor.prototype as Record<string | symbol, unknown>;
+          if (
+            Reflect.getMetadata(COMPONENT_METADATA_KEYS.SELECT_PAYLOAD_PARAM, proto, 'handle') !==
+              undefined ||
+            Reflect.getMetadata(COMPONENT_METADATA_KEYS.PAYLOAD_REF_PARAM, proto, 'handle') !== undefined
+          ) {
+            throw new Error(
+              `${ctor.name}: @SelectPayload() and @PayloadRef() cannot be used in a handler for an inline-encoded @DynamicStringSelect. Use @SelectParams() instead.`,
+            );
+          }
+        }
+        this.assertNoCollision(dyn.baseId);
+        this.dynamicHandlers.push({ baseId: dyn.baseId, handlerCtor: ctor, handlerInstance: instance });
+        return;
+      }
+
+      throw new Error(
+        `${ctor.name}: @SelectHandler references ${componentClass.name} which is not decorated with a select decorator or @DynamicStringSelect().`,
+      );
     }
 
     const dynMeta: DynamicSelectHandlerMeta | undefined = Reflect.getMetadata(

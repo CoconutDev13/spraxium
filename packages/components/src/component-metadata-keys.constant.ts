@@ -26,6 +26,8 @@ export const COMPONENT_METADATA_KEYS = {
   MODAL_CACHE_CONFIG: 'spraxium:modal_cache_config',
   MODAL_TEXT_DISPLAYS: 'spraxium:modal_text_displays',
   MODAL_PENDING_CHOICES: 'spraxium:modal_pending_choices',
+  MODAL_PARAMS_PARAM: 'spraxium:modal_params_param',
+  MODAL_PAYLOAD_PARAM: 'spraxium:modal_payload_param',
 
   SELECT_COMPONENT: 'spraxium:select_component',
   SELECT_OPTIONS_LIST: 'spraxium:select_options_list',
